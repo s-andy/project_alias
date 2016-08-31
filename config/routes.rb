@@ -10,10 +10,10 @@ if Rails::VERSION::MAJOR < 3
 
 else
 
-    match 'project_aliases', :to => 'project_aliases#index'
-    match 'project_aliases/new', :to => 'project_aliases#new'
-    match 'project_aliases/create', :to => 'project_aliases#create'
-    match 'project_aliases/:id/destroy', :to => 'project_aliases#destroy'
-    match 'project_aliases/:id/rename', :to => 'project_aliases#rename'
+    get    'project_aliases',             :to => 'project_aliases#index'
+    get    'project_aliases/new',         :to => 'project_aliases#new'
+    post   'project_aliases/create',      :to => 'project_aliases#create'
+    delete 'project_aliases/:id/destroy', :to => 'project_aliases#destroy'
+    get    'project_aliases/:id/rename',  :to => 'project_aliases#rename' # FIXME put?
 
 end

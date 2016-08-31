@@ -13,14 +13,14 @@ class ProjectAliasesController < ApplicationController
             'identifier' => "#{Project.table_name}.identifier",
             'project'    => "#{Project.table_name}.name"
         )
-        @projects = Project.visible.find(:all)
-        @aliases = ProjectAlias.find(:all, :include => :project, :order => sort_clause)
+        @projects = Project.visible.all
+        @aliases = ProjectAlias.joins(:project).order(sort_clause)
         render(:layout => !request.xhr?)
     end
 
     def new
         @alias = ProjectAlias.new
-        @projects = Project.visible.find(:all, :order => 'lft')
+        @projects = Project.visible.order('lft')
     end
 
     def create
@@ -29,7 +29,7 @@ class ProjectAliasesController < ApplicationController
             flash[:notice] = l(:notice_successful_create)
             redirect_to(:action => 'index')
         else
-            @projects = Project.find(:all, :order => 'lft')
+            @projects = Project.order('lft')
             render('project_aliases/new')
         end
     end

@@ -2,9 +2,9 @@ class ProjectAlias < ActiveRecord::Base
     belongs_to :project
 
     if defined? ChiliProject
-        IDENTIFIER_RE = /^(?!\d+$)[a-z0-9\-_]*$/
+        IDENTIFIER_RE = %r{\A(?!\d+$)[a-z0-9\-_]*\z}
     else
-        IDENTIFIER_RE = /^(?!\d+$)[a-z0-9\-]*$/
+        IDENTIFIER_RE = %r{\A(?!\d+$)[a-z0-9\-]*\z}
     end
 
     validates_presence_of :project, :alias
@@ -13,10 +13,12 @@ class ProjectAlias < ActiveRecord::Base
     validates_format_of :alias, :with => IDENTIFIER_RE
     validates_exclusion_of :alias, :in => %w(new)
 
+    attr_protected :id, :undeletable
+
     def validate
         if self.alias == self.project.identifier
             errors.add(:alias, :same_as_identifier)
-        elsif Project.find_all_by_identifier(self.alias).any?
+        elsif Project.find_by_identifier(self.alias)
             errors.add(:alias, :identifier_exists)
         end
     end

@@ -4,3 +4,8 @@
 .icon-rename {
     background-image: url(../images/rename.png);
 }
+table.list td.alias,
+table.list td.identifier,
+table.list td.project {
+    text-align: left;
+}
