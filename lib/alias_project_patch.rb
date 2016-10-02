@@ -18,8 +18,8 @@ module AliasProjectPatch
             if args.first
                 project_alias = ProjectAlias.find_by_alias(args.first)
                 return project_alias.project if project_alias
+                where(:identifier => args.first).first
             end
-            super
         end
 
     end
