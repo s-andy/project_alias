@@ -1,11 +1,7 @@
 class ProjectAlias < ActiveRecord::Base
     belongs_to :project
 
-    if defined? ChiliProject
-        IDENTIFIER_RE = %r{\A(?!\d+$)[a-z0-9\-_]*\z}
-    else
-        IDENTIFIER_RE = %r{\A(?!\d+$)[a-z0-9\-]*\z}
-    end
+    IDENTIFIER_RE = %r{\A(?!\d+$)[a-z0-9\-_]*\z}
 
     validates_presence_of :project, :alias
     validates_uniqueness_of :alias
