@@ -6,7 +6,7 @@ pt:
 
   button_use_as_identifier: Usar como identificador
 
-  text_allowed_characters: Apenas letras minúsculas (a-z), números e traços - são suportados.
+  text_project_alias_info: Apenas letras minúsculas (a-z), números, traços e sublinhados são permitidos.
 
   activerecord:
     errors:

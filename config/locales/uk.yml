@@ -6,7 +6,7 @@ uk:
 
   button_use_as_identifier: Використовувати як ідентифікатор
 
-  text_allowed_characters: Допустимі літери (a-z), цифри і дефіс.
+  text_project_alias_info: Допускаються тільки рядкові малі букви (a-z), цифри, тире та підкреслення (нижнє тире).
 
   activerecord:
     errors:

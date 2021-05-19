@@ -1,23 +1,20 @@
 class ProjectAlias < ActiveRecord::Base
+    include Redmine::SafeAttributes
+
     belongs_to :project
 
     IDENTIFIER_RE = %r{\A(?!\d+$)[a-z0-9\-_]*\z}
 
     validates_presence_of :project, :alias
     validates_uniqueness_of :alias
-    validates_length_of :alias, :in => Project.const_defined?(:IDENTIFIER_MAX_LENGTH) ? 1..Project::IDENTIFIER_MAX_LENGTH : 1..20
+    validates_length_of :alias, :in => Project.const_defined?(:IDENTIFIER_MAX_LENGTH) ? 1..Project::IDENTIFIER_MAX_LENGTH : 1..20, :allow_blank => true
     validates_format_of :alias, :with => IDENTIFIER_RE
     validates_exclusion_of :alias, :in => %w(new)
+    validate :validate_alias
 
-    attr_protected :id, :undeletable
+    attr_protected :id, :undeletable if Rails::VERSION::MAJOR < 5
 
-    def validate
-        if self.alias == self.project.identifier
-            errors.add(:alias, :same_as_identifier)
-        elsif Project.find_by_identifier(self.alias)
-            errors.add(:alias, :identifier_exists)
-        end
-    end
+    safe_attributes :project_id, :alias
 
     def rename!
         if Project.connection.update("UPDATE #{Project.table_name} " +
@@ -35,6 +32,18 @@ class ProjectAlias < ActiveRecord::Base
             end
         else
             false
+        end
+    end
+
+private
+
+    def validate_alias
+        if self.alias
+            if self.project && self.alias == self.project.identifier
+                errors.add(:alias, :same_as_identifier)
+            elsif Project.find_by_identifier(self.alias)
+                errors.add(:alias, :identifier_exists)
+            end
         end
     end
 

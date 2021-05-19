@@ -6,7 +6,7 @@ tr:
 
   button_use_as_identifier: Tanımlayıcı olarak kullan
 
-  text_allowed_characters: Sadece küçük harfler (a-z), sayılar ve noktalamaya izin verilmiştir.
+  text_project_alias_info: Yalnızca küçük harfler (a-z), sayılar, tire ve alt tire kullanılabilir.
 
   activerecord:
     errors:

@@ -2,7 +2,7 @@ class ProjectAliasesController < ApplicationController
     layout 'admin'
     self.main_menu = false if self.respond_to?(:main_menu)
 
-    before_filter :require_admin
+    before_action :require_admin
 
     helper :sort
     include SortHelper
@@ -25,12 +25,13 @@ class ProjectAliasesController < ApplicationController
     end
 
     def create
-        @alias = ProjectAlias.new(params[:project_alias])
+        @alias = ProjectAlias.new
+        @alias.safe_attributes = params[:project_alias]
         if @alias.save
             flash[:notice] = l(:notice_successful_create)
             redirect_to(:action => 'index')
         else
-            @projects = Project.order('lft')
+            @projects = Project.visible.order('lft')
             render('project_aliases/new')
         end
     end

@@ -6,7 +6,7 @@ it:
 
   button_use_as_identifier: Usa come identificatore
 
-  text_allowed_characters: Ammessi solo lettere minuscole (a-z), numeri e trattini.
+  text_project_alias_info: Consentiti solo lettere minuscole (a-z), numeri, trattini e trattini bassi.
 
   activerecord:
     errors:
